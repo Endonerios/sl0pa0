@@ -109,6 +109,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ZeroVelocity()
+    {
+        rb.velocity = new Vector2(0, 0);
+    }
+
     void Die()
     {
         GameManager.instance.Respawn();

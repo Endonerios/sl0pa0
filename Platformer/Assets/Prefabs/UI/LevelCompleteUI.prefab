@@ -342,9 +342,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821a43f87f5584141900768385b2b1f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdImg: {fileID: 0}
+  Img: {fileID: 0}
+  defaultSprite: {fileID: 0}
+  holdSprite: {fileID: 0}
+  HoverColor: {r: 0, g: 0, b: 0, a: 0}
+  PressKey: 109
   holdThreshold: 0.1
-  holdResetTime: 0
+  holdMinTime: 0
   buttonPressed: 0
   onButtonClick:
     m_PersistentCalls:

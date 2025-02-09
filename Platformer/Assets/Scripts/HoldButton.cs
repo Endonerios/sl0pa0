@@ -2,29 +2,48 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Events;
+[RequireComponent (typeof (Image))]
 
 public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] Image Img;
+    Image Img;
     [SerializeField] Sprite defaultSprite, holdSprite;
     [SerializeField] Color HoverColor;
-    float current_hold_time;
+    [SerializeField] KeyCode PressKey;
+    [SerializeField] float current_hold_time;
     [SerializeField] float holdThreshold;
     [SerializeField] float holdMinTime;
+    [SerializeField] float holdStartTime;
+    [SerializeField] float lastFrameTime;
     public bool buttonPressed;
     public UnityEvent onButtonClick;
     public UnityEvent onButtonHold;
 
+    private void Start()
+    {
+        Img = GetComponent<Image> ();
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         buttonPressed = true;
+        holdStartTime = Time.realtimeSinceStartup;
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(PressKey))
+        {
+            buttonPressed = true;
+            holdStartTime = Time.realtimeSinceStartup;
+        }
+        else if (Input.GetKeyUp(PressKey))
+        {
+            HoldCheck();
+        }
         if (buttonPressed)
         {
-            current_hold_time += Time.deltaTime;
+            current_hold_time += (Time.realtimeSinceStartup - holdStartTime) - current_hold_time;
             if (current_hold_time > holdThreshold)
             {
                 Img.sprite = holdSprite;
@@ -35,8 +54,13 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        HoldCheck();
+    }
+
+    public void HoldCheck()
+    {
         buttonPressed = false;
-        if (current_hold_time >= holdMinTime)
+        if ((Time.realtimeSinceStartup - holdStartTime) <= holdMinTime)
         {
             //GameManager.instance.ResetLevel();
             onButtonHold.Invoke();

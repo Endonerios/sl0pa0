@@ -156,6 +156,10 @@ PrefabInstance:
       value: PauseUI
       objectReference: {fileID: 0}
     - target: {fileID: 9203460911764097456, guid: 49a347a41378dcb4b9b8256d835ac61f, type: 3}
+      propertyPath: PressKey
+      value: 109
+      objectReference: {fileID: 0}
+    - target: {fileID: 9203460911764097456, guid: 49a347a41378dcb4b9b8256d835ac61f, type: 3}
       propertyPath: holdMinTime
       value: 1.5
       objectReference: {fileID: 0}

@@ -222,6 +222,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -0.000025510788
       objectReference: {fileID: 0}
+    - target: {fileID: 2214210506360184085, guid: 71d0cef69224c154fac7a1b14a7fb08b, type: 3}
+      propertyPath: holdThreshold
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 3215476020631587896, guid: 71d0cef69224c154fac7a1b14a7fb08b, type: 3}
       propertyPath: m_Name
       value: LevelPack

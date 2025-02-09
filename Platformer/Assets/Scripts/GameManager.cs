@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] int MaxRooms;
     [SerializeField] RoomController[] RoomVars;
-    List<RoomController> SpawnedRooms = new List<RoomController>();
+    [SerializeField] List<RoomController> SpawnedRooms = new List<RoomController>();
     List<int> used_index = new List<int>();
     [SerializeField] RoomController StartRoom;
     [SerializeField] RoomController EndRoom;
@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
             case GameState.Menu:
                 Time.timeScale = 1f;
                 UIManager.instance.SwitchState(UIManager.UIState.LevelMenu);
+                ClearLevel();
                 //Write code for deletion all spawned objects
                 CurrentState = new_state;
                 break;
@@ -98,6 +99,7 @@ public class GameManager : MonoBehaviour
         else
         {
             PlayerInstance.transform.position = SpawnedRooms[activeRoom].spawn.GetComponentInChildren<TriggerZone>().transform.position;
+            PlayerInstance.ZeroVelocity();
         }
     }
 
@@ -183,16 +185,24 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel()
     {
-        if (activeRoom < 1)
-        {
-            activeRoom = 0;
-        }
+        activeRoom = 0;
         SpawnRoom(StartRoom);
         //PlaceRoom(StartRoom);
         while (MaxRooms > used_index.Count)
         {
             SpawnRoom();
         }
-        PlaceRoom(EndRoom);
+        SpawnRoom(EndRoom);
+    }
+
+    public void ClearLevel()
+    {
+        Debug.Log("Clearing Level!");
+        Destroy(PlayerInstance.gameObject);
+        foreach (RoomController room in SpawnedRooms)
+        {
+            Destroy(room.gameObject);
+        }
+        SpawnedRooms = new List<RoomController>();
     }
 }

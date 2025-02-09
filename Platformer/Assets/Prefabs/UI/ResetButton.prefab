@@ -140,6 +140,7 @@ MonoBehaviour:
   defaultSprite: {fileID: 2020008073, guid: dd3f4a7377b7bfb49b08ddfc5e3b1986, type: 3}
   holdSprite: {fileID: 1490937904, guid: 6c579ca06227f8d479d513e706dbbaaa, type: 3}
   HoverColor: {r: 0.990566, g: 0.87313455, b: 0.60275006, a: 1}
+  PressKey: 114
   holdThreshold: 0.2
   holdMinTime: 1.75
   buttonPressed: 0
