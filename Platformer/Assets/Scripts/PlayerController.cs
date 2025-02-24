@@ -16,6 +16,13 @@ public class PlayerController : MonoBehaviour
     float coyote_timer;
     bool coyote_time_active;
 
+    public int JumpCount;
+    public float TimeCount;
+    public int CoinCount;
+    public int BounceCount;
+    public int RespawnCount;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -52,6 +59,11 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "Coin")
         {
             GameManager.instance.OnCoinPickUp(collision.gameObject.GetComponentInParent<Coin>());
+            CoinCount++;
+        }
+        if (IsBouncing && collision.tag == "Ground")
+        {
+            BounceCount++;
         }
     }
 
@@ -98,6 +110,7 @@ public class PlayerController : MonoBehaviour
         current_velocity.y = jump_force;
         //Debug.Log("Jumped!");
         IsJumping = false;
+        JumpCount++;
     }
 
     public void RecieveDmg(int dmg = 1)
@@ -117,5 +130,6 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         GameManager.instance.Respawn();
+        RespawnCount++;
     } 
 }

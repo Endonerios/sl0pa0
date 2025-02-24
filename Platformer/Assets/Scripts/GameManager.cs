@@ -20,12 +20,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] int activeRoom;
     [SerializeField] PlayerController PlayerPrefab;
 
-    [SerializeField] int MaxRooms;
-    [SerializeField] RoomController[] RoomVars;
+    public LevelSettings[] GameLevels;
+    public ushort SelectedLevel;
+    public float LevelStartTime;
+    //[SerializeField] int MaxRooms;
+    //[SerializeField] RoomController[] RoomVars;
     [SerializeField] List<RoomController> SpawnedRooms = new List<RoomController>();
     List<int> used_index = new List<int>();
-    [SerializeField] RoomController StartRoom;
-    [SerializeField] RoomController EndRoom;
+    //[SerializeField] RoomController StartRoom;
+    //[SerializeField] RoomController EndRoom;
 
     public PlayerController PlayerInstance { get; private set; }
     public static GameManager instance { get; private set; }
@@ -72,6 +75,7 @@ public class GameManager : MonoBehaviour
                 LoadLevel();
                 Respawn();
                 CurrentState = new_state;
+                LevelStartTime = Time.time;
 
                 SwitchState(GameState.Play);
                 break;
@@ -82,6 +86,7 @@ public class GameManager : MonoBehaviour
                 CurrentState = new_state;
                 break;
             case GameState.Pause:
+                
                 UIManager.instance.SwitchState(UIManager.UIState.GamePause);
                 Time.timeScale = 0f;
                 CurrentState = new_state;
@@ -119,7 +124,7 @@ public class GameManager : MonoBehaviour
 
     public bool CheckLevelComplete()
     {
-        if (activeRoom > MaxRooms)
+        if (activeRoom > GameLevels[SelectedLevel].RoomCount)
         {
             return true;
         }
@@ -128,7 +133,8 @@ public class GameManager : MonoBehaviour
 
     public void LevelComplete()
     {
-
+        Time.timeScale = 0f;
+        UIManager.instance.SwitchState(UIManager.UIState.LevelComplete);
     }
 
     public void OnCoinPickUp(Coin coin)
@@ -153,8 +159,8 @@ public class GameManager : MonoBehaviour
         int new_index = 0;
         while (new_room == null)
         {
-            new_index = Random.Range(0, RoomVars.Length);
-            new_room = RoomVars[new_index];
+            new_index = Random.Range(0, GameLevels[SelectedLevel].RoomVars.Length);
+            new_room = GameLevels[SelectedLevel].RoomVars[new_index];
             if (used_index.Count > 0)
             {
                 foreach (int index in used_index)
@@ -186,13 +192,13 @@ public class GameManager : MonoBehaviour
     public void LoadLevel()
     {
         activeRoom = 0;
-        SpawnRoom(StartRoom);
+        SpawnRoom(GameLevels[SelectedLevel].StartRoom);
         //PlaceRoom(StartRoom);
-        while (MaxRooms > used_index.Count)
+        while (GameLevels[SelectedLevel].RoomCount > used_index.Count)
         {
             SpawnRoom();
         }
-        SpawnRoom(EndRoom);
+        SpawnRoom(GameLevels[SelectedLevel].EndRoom);
     }
 
     public void ClearLevel()
@@ -203,6 +209,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(room.gameObject);
         }
+        used_index.Clear();
         SpawnedRooms = new List<RoomController>();
     }
 }

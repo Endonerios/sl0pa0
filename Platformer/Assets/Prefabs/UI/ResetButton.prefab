@@ -136,12 +136,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821a43f87f5584141900768385b2b1f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Img: {fileID: 5855210409190780053}
   defaultSprite: {fileID: 2020008073, guid: dd3f4a7377b7bfb49b08ddfc5e3b1986, type: 3}
   holdSprite: {fileID: 1490937904, guid: 6c579ca06227f8d479d513e706dbbaaa, type: 3}
-  HoverColor: {r: 0.990566, g: 0.87313455, b: 0.60275006, a: 1}
+  HoverColor: {r: 0.5188679, g: 0, b: 0.041409686, a: 1}
+  DefaultColor: {r: 0, g: 0, b: 0, a: 0}
   PressKey: 114
-  holdThreshold: 0.2
+  current_hold_time: 0
+  holdThreshold: 0.25
   holdMinTime: 1.75
   buttonPressed: 0
   onButtonClick:

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,11 +20,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] UIState CurrentState;
     [SerializeField] GameObject load;
     [SerializeField] MainMenu mainMenu;
-    [SerializeField] GameObject levelMenu;
+    [SerializeField] LevelMenu levelMenu;
     [SerializeField] GameObject options;
     [SerializeField] GameUI gameUI;
-    [SerializeField] GameObject gamePause;
-    [SerializeField] GameObject levelComplete;
+    [SerializeField] PauseUI gamePause;
+    [SerializeField] LevelCompleteUI levelComplete;
     public static UIManager instance { get; private set; }
 
     private void Awake()
@@ -59,6 +60,8 @@ public class UIManager : MonoBehaviour
                 levelComplete.gameObject.SetActive(false);
                 break;
             case UIState.LevelMenu:
+                levelMenu.UpdateLevelContent();
+
                 load.gameObject.SetActive(false);
                 mainMenu.gameObject.SetActive(false);
                 levelMenu.gameObject.SetActive(true);
@@ -86,6 +89,7 @@ public class UIManager : MonoBehaviour
                 levelComplete.gameObject.SetActive(false);
                 break;
             case UIState.GamePause:
+                UpdateStats(gamePause.StatsText);
                 load.gameObject.SetActive(false);
                 mainMenu.gameObject.SetActive(false);
                 levelMenu.gameObject.SetActive(false);
@@ -95,6 +99,7 @@ public class UIManager : MonoBehaviour
                 levelComplete.gameObject.SetActive(false);
                 break;
             case UIState.LevelComplete:
+                UpdateStats(levelComplete.StatsText);
                 load.gameObject.SetActive(false);
                 mainMenu.gameObject.SetActive(false);
                 levelMenu.gameObject.SetActive(false);
@@ -105,5 +110,15 @@ public class UIManager : MonoBehaviour
                 break;
         }
         CurrentState = new_state;
+    }
+
+    public void UpdateStats(TMP_Text statsText)
+    {
+        statsText.text = "Stats: \n" +
+            $"Jumps: {GameManager.instance.PlayerInstance.JumpCount} \n" +
+            $"Timer: {Time.time - GameManager.instance.LevelStartTime} \n" +
+            $"Coins: {GameManager.instance.PlayerInstance.CoinCount} \n" +
+            $"Times bounced: {GameManager.instance.PlayerInstance.BounceCount} \n" +
+            $"Times respawned: {GameManager.instance.PlayerInstance.RespawnCount} \n";
     }
 }

@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PauseUI : MonoBehaviour
+public class LevelCompleteUI : MonoBehaviour
 {
     public TMP_Text StatsText;
 
@@ -22,5 +20,10 @@ public class PauseUI : MonoBehaviour
     public void LevelMenuPressed()
     {
         GameManager.instance.SwitchState(GameManager.GameState.Menu);
+    }
+
+    public void NextLevelPressed()
+    {
+        return;
     }
 }
