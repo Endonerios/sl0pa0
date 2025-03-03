@@ -268,7 +268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3453888377855622168, guid: 71d0cef69224c154fac7a1b14a7fb08b, type: 3}
       propertyPath: GameLevels.Array.size
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3453888377855622168, guid: 71d0cef69224c154fac7a1b14a7fb08b, type: 3}
       propertyPath: GameLevels.Array.data[0]

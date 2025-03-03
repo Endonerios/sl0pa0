@@ -4,7 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb;
     Collider2D col2D;
-    [SerializeField] bool IsJumping, IsOnGround, IsBouncing, ShouldBounce;
+    [SerializeField] bool IsJumping, IsBouncing, ShouldBounce;
     [SerializeField] float speed, jump_force;
     [SerializeField] int hp;
     [Range(0,10f)][SerializeField] float bounce_factor, non_bounce_factor;
@@ -13,8 +13,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform legs_hitbox;
     [SerializeField] LayerMask ground_layer;
     [SerializeField] float max_coyote_time;
+    [SerializeField] float jump_ground_value;
+    [SerializeField] float stickDistanceMod;
     float coyote_timer;
-    bool coyote_time_active;
+    //bool coyote_time_active;
 
     public int JumpCount;
     public float TimeCount;
@@ -31,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Space) && coyote_timer > 0))
+        if (Input.GetKeyDown(KeyCode.Space) && coyote_timer > 0)
         {
             IsJumping = true;
         }
@@ -43,6 +45,7 @@ public class PlayerController : MonoBehaviour
         CheckIsOnGround();
         current_velocity = rb.velocity;
         current_velocity.x = Input.GetAxis("Horizontal") * speed;
+        legs_hitbox.transform.localPosition = new Vector3(0, Input.GetAxis("Vertical")*stickDistanceMod);
         if (IsJumping)
         {
             Jump();
@@ -77,6 +80,7 @@ public class PlayerController : MonoBehaviour
             {
                 new_bounciness = bounce_factor;
                 new_friction = 0;
+                rb.gravityScale = 1.1f;
             }
             else
             {
@@ -93,21 +97,25 @@ public class PlayerController : MonoBehaviour
 
     void CheckIsOnGround()
     {
+        RaycastHit2D hit = Physics2D.BoxCast(legs_hitbox.position, legs_hitbox.lossyScale, 0, Vector2.down, 0, ground_layer);
         coyote_timer -= Time.fixedTime;
-        if (Physics2D.OverlapBox(legs_hitbox.position, legs_hitbox.lossyScale, 0, ground_layer))
+        if (hit.collider)
         {
-            IsOnGround = true;
+            jump_ground_value = Mathf.Clamp((transform.position.y - hit.point.y) * 10000, -1, 1);
             coyote_timer = max_coyote_time;
+            rb.gravityScale = 0;
         }
         else
         {
-            IsOnGround = false;
+            jump_ground_value = 0;
+            rb.gravityScale = 1.1f;
         }
     }
 
     void Jump()
     {
-        current_velocity.y = jump_force;
+        rb.gravityScale = 1.1f;
+        current_velocity.y = jump_force * jump_ground_value;
         //Debug.Log("Jumped!");
         IsJumping = false;
         JumpCount++;
