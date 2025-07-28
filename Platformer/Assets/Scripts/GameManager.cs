@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameState CurrentState;
     [SerializeField] int activeRoom;
-    [SerializeField] PlayerController PlayerPrefab;
+    [SerializeField] SlimeController PlayerPrefab;
 
     public LevelSettings[] GameLevels;
     public ushort SelectedLevel;
@@ -30,7 +30,15 @@ public class GameManager : MonoBehaviour
     //[SerializeField] RoomController StartRoom;
     //[SerializeField] RoomController EndRoom;
 
-    public PlayerController PlayerInstance { get; private set; }
+    [Space]
+    [Header("Score")]
+    public int JumpCount;
+    public float TimeCount;
+    public int CoinCount;
+    public int BounceCount;
+    public int RespawnCount;
+
+    public SlimeController PlayerInstance { get; private set; }
     public static GameManager instance { get; private set; }
 
     private void Start()
@@ -104,7 +112,8 @@ public class GameManager : MonoBehaviour
         else
         {
             PlayerInstance.transform.position = SpawnedRooms[activeRoom].spawn.GetComponentInChildren<TriggerZone>().transform.position;
-            PlayerInstance.ZeroVelocity();
+            //PlayerInstance.ZeroVelocity();
+            PlayerInstance.ResetSlime();
         }
     }
 
@@ -152,11 +161,19 @@ public class GameManager : MonoBehaviour
         Respawn();
     }
 
-
+    public void CheckLevelSettings()
+    {
+        if (GameLevels[SelectedLevel].RoomCount > GameLevels[SelectedLevel].RoomVars.Length)
+        {
+            Debug.LogWarning($"Room count of {GameLevels[SelectedLevel].LevelName} had to be shortened due to lack of RoomVars");
+            GameLevels[SelectedLevel].RoomCount = GameLevels[SelectedLevel].RoomVars.Length + 1;
+        }
+    }
 
     void SpawnRoom(RoomController? new_room = null)
     {
-        int new_index = 0;
+        int new_index = -1;
+        //-1 for the room variant with index 0 to spawn
         while (new_room == null)
         {
             new_index = Random.Range(0, GameLevels[SelectedLevel].RoomVars.Length);
@@ -192,6 +209,7 @@ public class GameManager : MonoBehaviour
     public void LoadLevel()
     {
         activeRoom = 0;
+        CheckLevelSettings();
         SpawnRoom(GameLevels[SelectedLevel].StartRoom);
         //PlaceRoom(StartRoom);
         while (GameLevels[SelectedLevel].RoomCount > used_index.Count)

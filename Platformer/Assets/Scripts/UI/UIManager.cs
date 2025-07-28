@@ -115,10 +115,10 @@ public class UIManager : MonoBehaviour
     public void UpdateStats(TMP_Text statsText)
     {
         statsText.text = "Stats: \n" +
-            $"Jumps: {GameManager.instance.PlayerInstance.JumpCount} \n" +
+            $"Jumps: {GameManager.instance.JumpCount} \n" +
             $"Timer: {Time.time - GameManager.instance.LevelStartTime} \n" +
-            $"Coins: {GameManager.instance.PlayerInstance.CoinCount} \n" +
-            $"Times bounced: {GameManager.instance.PlayerInstance.BounceCount} \n" +
-            $"Times respawned: {GameManager.instance.PlayerInstance.RespawnCount} \n";
+            $"Coins: {GameManager.instance.CoinCount} \n" +
+            $"Times bounced: {GameManager.instance.BounceCount} \n" +
+            $"Times respawned: {GameManager.instance.RespawnCount} \n";
     }
 }

@@ -202,11 +202,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentState: 0
   activeRoom: 0
-  PlayerPrefab: {fileID: 9181793117438618961, guid: cd99ac0ba1bce444ca25cbeb81141dd2, type: 3}
+  PlayerPrefab: {fileID: 973271310753857521, guid: 8f3009914cd525249948c3226d3f7b88, type: 3}
   GameLevels: []
   SelectedLevel: 0
   LevelStartTime: 0
   SpawnedRooms: []
+  JumpCount: 0
+  TimeCount: 0
+  CoinCount: 0
+  BounceCount: 0
+  RespawnCount: 0
 --- !u!1 &3453888378421381139
 GameObject:
   m_ObjectHideFlags: 0

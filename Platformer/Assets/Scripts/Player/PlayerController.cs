@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,7 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float stickDistanceMod;
     float coyote_timer;
     //bool coyote_time_active;
-
+    [Space]
+    [Header ("Score")]
     public int JumpCount;
     public float TimeCount;
     public int CoinCount;
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
         current_velocity = rb.velocity;
         current_velocity.x = Input.GetAxis("Horizontal") * speed;
         legs_hitbox.transform.localPosition = new Vector3(0, Input.GetAxis("Vertical")*stickDistanceMod);
+        //transform.localScale += new Vector3(0, Input.GetAxis("Vertical") * stickDistanceMod/2);
         if (IsJumping)
         {
             Jump();
