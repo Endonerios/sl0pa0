@@ -310,6 +310,7 @@ public class SlimeController : MonoBehaviour
                     break;
                 case Direction.Ceiling:
                     sr.sprite = slime_ceiling;
+                    sr.flipY = false;
                     break;
                 case Direction.CeilingRight:
                     sr.sprite = slime_ceiling_right;
@@ -497,7 +498,12 @@ public class SlimeController : MonoBehaviour
 
     void IdentifyElement(Collider2D col)
     {
-        if (col.tag == "SaltPiece")
+        if(col.tag == "Coin")
+        {
+            GameManager.instance.OnCoinPickUp(col.gameObject.GetComponentInParent<Coin>());
+            //CoinCount++;
+        }
+        else if (col.tag == "SaltPiece")
         {
             ReactToElement(Element.SaltPiece);
         }
