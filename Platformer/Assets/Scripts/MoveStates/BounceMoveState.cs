@@ -7,7 +7,7 @@ public class BounceMoveState : SlimeMoveState
     public override void EnterState(SlimeController slime)
     {
         Debug.Log("Entered Bounce State!");
-        slime.rb.sharedMaterial.bounciness = 1;
+        slime.rb.sharedMaterial.bounciness = 0;
         slime.col.enabled = false;
         slime.col.enabled = true;
         slime.rb.gravityScale = 1f;
@@ -19,9 +19,9 @@ public class BounceMoveState : SlimeMoveState
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            slime.rb.sharedMaterial.bounciness = 0;
-            slime.col.enabled = false;
-            slime.col.enabled = true;
+            //slime.rb.sharedMaterial.bounciness = 0;
+            //slime.col.enabled = false;
+            //slime.col.enabled = true;
             slime.EnterMoveState(MoveState.Air);
             return;
         }
@@ -34,6 +34,20 @@ public class BounceMoveState : SlimeMoveState
 
     public override void ReactToGround(Side side, SlimeController slime)
     {
-        
+        switch (side)
+        {
+            case Side.Bottom://sticks to the ground
+                slime.EnterMoveState(MoveState.Ground);
+                break;
+            case Side.Top://sticks to the ceiling
+                slime.EnterMoveState(MoveState.Ceiling);
+                break;
+            case Side.Left://sticks to a left wall
+                slime.EnterMoveState(MoveState.Wall);
+                break;
+            case Side.Right://sticks to a right wall
+                slime.EnterMoveState(MoveState.Wall);
+                break;
+        }
     }
 }

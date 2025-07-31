@@ -11,12 +11,12 @@ public class GroundMoveState : SlimeMoveState
 
     public override void UpdateState(SlimeController slime)
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            IsControlled = false;
-            slime.EnterMoveState(MoveState.Bounce);
-            return;
-        }
+        //if (Input.GetKey(KeyCode.LeftShift))
+        //{
+        //    IsControlled = false;
+        //    slime.EnterMoveState(MoveState.Bounce);
+        //    return;
+        //}
         if (Input.GetKeyDown(KeyCode.Space))
         {
             slime.EnterMoveState(MoveState.Jump);

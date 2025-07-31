@@ -12,12 +12,12 @@ public class WallMoveState : SlimeMoveState
 
     public override void UpdateState(SlimeController slime)
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            IsControlled = false;
-            slime.EnterMoveState(MoveState.Bounce);
-            return;
-        }
+        //if (Input.GetKey(KeyCode.LeftShift))
+        //{
+        //    IsControlled = false;
+        //    slime.EnterMoveState(MoveState.Bounce);
+        //    return;
+        //}
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (slime.CurrentSide == Side.Left) 
@@ -31,31 +31,6 @@ public class WallMoveState : SlimeMoveState
                 return;
             }
         }
-        //float move_vector_y = move_vector.y;
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    if (slime.CurrentSide == Side.Left)
-        //    {
-        //        slime.EnterMoveState(MoveState.JumpWallRight);
-        //    }
-        //    else
-        //    {
-        //        slime.EnterMoveState(MoveState.JumpWallLeft);
-        //    }
-        //    return;
-        //}
-        //slime.ChangeDirection(Direction.Wall);
-        //move_vector.x = 0;
-        ////move_vector.y = Mathf.Lerp(move_vector.y, 0, slime.CurrentSlimeState.FrictionWall);
-        //if (move_vector.y != 0)
-        //{
-        //    move_vector.y -= slime.CurrentSlimeState.FrictionWall;
-        //}
-        ////move_vector.y * slime.CurrentSlimeState.FrictionWall;
-        //slime.Move = move_vector;
-        //Debug.Log($"Initial Y speed: {move_vector_y}" +
-        //    $"\nNew Y speed: {move_vector.y}" +
-        //    $"\nNew Y speed (applied): {slime.Move.y}");
     }
 
     public override void FixedUpdateState(SlimeController slime, Vector2 move_vector)

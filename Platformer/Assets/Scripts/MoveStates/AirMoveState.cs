@@ -9,6 +9,10 @@ public class AirMoveState : SlimeMoveState
     {
         Debug.Log("Entered Air State!");
         slime.rb.gravityScale = 1f;
+
+        slime.rb.sharedMaterial.bounciness = 1;
+        slime.col.enabled = false;
+        slime.col.enabled = true;
         //slime.sr.sprite = slime.slime_inAir;
     }
 
@@ -39,13 +43,6 @@ public class AirMoveState : SlimeMoveState
             slime.ChangeDirection(Direction.InAir);
             IsControlled = false;
         }
-        //else
-        //{
-        //move_vector.x = Mathf.Lerp(move_vector.x, 0, slime.CurrentSlimeState.Decceleration);
-        //slime.ChangeDirection(Direction.InAir);
-        //}
-        //move_vector_x = Mathf.Lerp(move_vector_x, slime.CurrentSlimeState.MaxSpeed * move_x, slime.CurrentSlimeState.Acceleration * Mathf.Abs(move_x));
-        //slime.Move.x = move_vector_x;
     }
 
     public override void FixedUpdateState(SlimeController slime, Vector2 move_vector)
@@ -57,31 +54,25 @@ public class AirMoveState : SlimeMoveState
                -slime.CurrentSlimeState.MaxSpeed,
                slime.CurrentSlimeState.MaxSpeed);
         }
-        //else
-        //{
-        //move_vector.x = move_vector.x - move_vector.x * slime.CurrentSlimeState.Decceleration;
-        // move_vector.x = Mathf.Sign(move_vector.x) * Mathf.Lerp(Mathf.Abs(move_vector.x), 0, slime.CurrentSlimeState.Decceleration);
-        //}
-        //Debug.Log($"Move: {move_vector.x}, {move_vector.y}");
         slime.Move = move_vector;
     }
 
-    public override void ReactToGround(Side touching_side, SlimeController slime)
+    public override void ReactToGround(Side side, SlimeController slime)
     {
-        switch (touching_side)
-        {
-            case Side.Bottom://sticks to the ground
-                slime.EnterMoveState(MoveState.Ground);
-                break; 
-            case Side.Top://sticks to the ceiling
-                slime.EnterMoveState(MoveState.Ceiling);
-                break;
-            case Side.Left://sticks to a left wall
-                slime.EnterMoveState(MoveState.Wall);
-                break;
-            case Side.Right://sticks to a right wall
-                slime.EnterMoveState(MoveState.Wall);
-                break;
-        }
+        //switch (side)
+        //{
+        //    case Side.Bottom://sticks to the ground
+        //        slime.EnterMoveState(MoveState.Ground);
+        //        break; 
+        //    case Side.Top://sticks to the ceiling
+        //        slime.EnterMoveState(MoveState.Ceiling);
+        //        break;
+        //    case Side.Left://sticks to a left wall
+        //        slime.EnterMoveState(MoveState.Wall);
+        //        break;
+        //    case Side.Right://sticks to a right wall
+        //        slime.EnterMoveState(MoveState.Wall);
+        //        break;
+        //}
     }
 }
