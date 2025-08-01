@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     Image ButtonImg;
-    Image? TopImg;
+    Image TopImg;
     [SerializeField] Sprite defaultSprite, holdSprite;
     [SerializeField] Color HoverColor;
     [SerializeField] Color DefaultColor;

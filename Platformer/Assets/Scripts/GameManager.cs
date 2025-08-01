@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void SpawnRoom(RoomController? new_room = null)
+    void SpawnRoom(RoomController new_room = null)
     {
         int new_index = -1;
         //-1 for the room variant with index 0 to spawn
@@ -212,9 +212,19 @@ public class GameManager : MonoBehaviour
         CheckLevelSettings();
         SpawnRoom(GameLevels[SelectedLevel].StartRoom);
         //PlaceRoom(StartRoom);
-        while (GameLevels[SelectedLevel].RoomCount > used_index.Count)
+        if (GameLevels[SelectedLevel].KeepRoomOrder)
         {
-            SpawnRoom();
+            foreach (RoomController room in GameLevels[SelectedLevel].RoomVars)
+            {
+                SpawnRoom(room);
+            }
+        }
+        else
+        {
+            while (GameLevels[SelectedLevel].RoomCount > used_index.Count)
+            {
+                SpawnRoom();
+            }
         }
         SpawnRoom(GameLevels[SelectedLevel].EndRoom);
     }
