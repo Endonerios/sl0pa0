@@ -9,4 +9,5 @@ public class LevelSettings : ScriptableObject
     public RoomController[] RoomVars;
     public RoomController StartRoom;
     public RoomController EndRoom;
+    public bool KeepRoomOrder;
 }
